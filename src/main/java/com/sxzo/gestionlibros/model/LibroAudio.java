@@ -11,7 +11,7 @@ import java.time.LocalDate;
  * @author carinaortiz
  */
 
-      public class LibroAudio extends Libro
+      public class LibroAudio extends Libro implements IReproducible
     {
     
     private int duracionMinutos;
@@ -38,6 +38,21 @@ import java.time.LocalDate;
 
     public void setNarrador(String narrador) {
         this.narrador = narrador;
+    }
+    
+    @Override
+    public double totalPagar() {
+    return getPrecio() + (duracionMinutos * 100);
+    }
+    
+     @Override
+      public void reproducir() {
+     System.out.println("Reproduciendo Audiolibro");
+    }
+
+     @Override
+     public void pausar() {
+     System.out.println("Audiolibro Pausado");
     }
     
     }

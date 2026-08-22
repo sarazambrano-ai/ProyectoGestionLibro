@@ -1,24 +1,27 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package com.sxzo.gestionlibros.gui;
-
-
 import com.sxzo.gestionlibros.model.Libro;
 import com.sxzo.gestionlibros.model.LibroAudio;
 import com.sxzo.gestionlibros.model.LibroFisico;
 import com.sxzo.gestionlibros.ServicioLibro;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
+
 /**
  *
- * @author UNIBAGUE
+ * @author Alejandra
  */
-public class GUIAddLibro extends javax.swing.JFrame {
+public class GUIAddLibroAudio extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIAddLibro.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIAddLibroAudio.class.getName());
 
     /**
-     * Creates new form GUIAddDocente
+     * Creates new form GUIAddLibroAudio
      */
-    public GUIAddLibro() {
+    public GUIAddLibroAudio() {
         initComponents();
         setLocationRelativeTo(this);
     }
@@ -32,32 +35,23 @@ public class GUIAddLibro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtPrecio = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        btnAceptar = new javax.swing.JButton();
         txtAutor = new javax.swing.JTextField();
-        btnMensaje = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtIsbn = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtTitulo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        txtPrecio = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        btnAceptar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        txtTipoTapa = new javax.swing.JTextField();
+        txtDuracionMinutos = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtFechaImpresion = new javax.swing.JTextField();
+        txtNarrador = new javax.swing.JTextField();
+        btnMensaje = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Adicionar Libro");
-
-        jLabel1.setText("Autor: ");
-        jLabel1.setToolTipText("");
-
-        btnAceptar.setText("Aceptar");
-        btnAceptar.addActionListener(this::btnAceptarActionPerformed);
-
-        btnMensaje.setText("Mensaje");
-        btnMensaje.addActionListener(this::btnMensajeActionPerformed);
+        setTitle("Adicionar Audiolibro ");
 
         jLabel2.setText("Isbn:");
         jLabel2.setToolTipText("");
@@ -72,22 +66,29 @@ public class GUIAddLibro extends javax.swing.JFrame {
         jLabel4.setText("Precio: ");
         jLabel4.setToolTipText("");
 
-        jLabel5.setText("Tipo tapa:");
-        jLabel5.setToolTipText("");
+        jLabel1.setText("Autor: ");
+        jLabel1.setToolTipText("");
 
-        txtTipoTapa.setToolTipText("\"Dura o Blanda\"");
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(this::btnAceptarActionPerformed);
 
-        jLabel6.setText("Fecha impresion:");
-        jLabel6.setToolTipText("");
+        jLabel5.setText("Duración Minutos:");
 
-        txtFechaImpresion.setToolTipText("2026-12-25");
+        txtDuracionMinutos.addActionListener(this::txtDuracionMinutosActionPerformed);
+
+        jLabel6.setText("Narrador:");
+
+        txtNarrador.addActionListener(this::txtNarradorActionPerformed);
+
+        btnMensaje.setText("Mensaje");
+        btnMensaje.addActionListener(this::btnMensajeActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,31 +96,33 @@ public class GUIAddLibro extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel1)
                             .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnMensaje)
-                            .addComponent(btnAceptar))
-                        .addGap(103, 103, 103))
+                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTipoTapa, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFechaImpresion, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(txtDuracionMinutos)
+                            .addComponent(txtNarrador))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(btnAceptar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnMensaje)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAceptar)
                     .addComponent(txtIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -136,55 +139,65 @@ public class GUIAddLibro extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtFechaImpresion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTipoTapa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnMensaje)
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(jLabel5)
+                    .addComponent(txtDuracionMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtNarrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMensaje))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtIsbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIsbnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIsbnActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         String isbn;
         String titulo;
         String autor;
         double precio;
-        LocalDate fechaImpresion;
-        String tipoTapa;
-        
-        Libro lib;
+        int duracionMinutos;
+        String narrador;
+
+        Libro libAudio;
         try {
             String strIsbn = txtIsbn.getText().trim();
             String strAutor = txtAutor.getText().trim();
             String strTitulo = txtTitulo.getText().trim();
             String strPrecio = txtPrecio.getText().trim();
-            String strFechaImpresion = txtFechaImpresion.getText().trim();
-            String strTipoTapa = txtTipoTapa.getText().trim();
-            
+            String strDuracionMinutos = txtDuracionMinutos.getText().trim();
+            String strNarrador = txtNarrador.getText().trim();
+
             isbn = strIsbn;
             autor = strAutor;
             titulo = strTitulo;
             precio = Double.parseDouble(strPrecio);
-            fechaImpresion = LocalDate.parse(strFechaImpresion);
-            tipoTapa = strTipoTapa;
-         
+            duracionMinutos = Integer.parseInt(strDuracionMinutos);
+            narrador = strNarrador;
 
-            lib = new LibroFisico(isbn, titulo, autor, precio, fechaImpresion,tipoTapa);
-            ServicioLibro.addLibro(lib);
-            JOptionPane.showMessageDialog(this, "Libro añadido!\nValor: $" + lib.totalPagar());
+            libAudio = new LibroAudio(isbn, titulo, autor, precio, duracionMinutos,narrador);
+            ServicioLibro.addLibro(libAudio);
+            JOptionPane.showMessageDialog(this, "Audiolibro añadido!\nValor: $" + libAudio.totalPagar());
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e);
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void txtDuracionMinutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDuracionMinutosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDuracionMinutosActionPerformed
+
+    private void txtNarradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNarradorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNarradorActionPerformed
 
     private void btnMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMensajeActionPerformed
         String mensaje;
@@ -193,10 +206,6 @@ public class GUIAddLibro extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(this, mensaje);
     }//GEN-LAST:event_btnMensajeActionPerformed
-
-    private void txtIsbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIsbnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIsbnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,7 +229,7 @@ public class GUIAddLibro extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GUIAddLibro().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new GUIAddLibroAudio().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -233,10 +242,10 @@ public class GUIAddLibro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField txtAutor;
-    private javax.swing.JTextField txtFechaImpresion;
+    private javax.swing.JTextField txtDuracionMinutos;
     private javax.swing.JTextField txtIsbn;
+    private javax.swing.JTextField txtNarrador;
     private javax.swing.JTextField txtPrecio;
-    private javax.swing.JTextField txtTipoTapa;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 }

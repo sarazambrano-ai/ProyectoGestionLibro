@@ -43,6 +43,11 @@ public class GUIPrincipal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal");
@@ -55,7 +60,7 @@ public class GUIPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu3.setText("Libro");
+        jMenu3.setText("Libro Fisico");
 
         jMenuItem2.setText("Adicionar Libro");
         jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
@@ -67,8 +72,26 @@ public class GUIPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
-        jMenu2.setText("Ayuda");
+        jMenu2.setText("AudioLibro");
+
+        jMenuItem5.setText("Adicionar Audiolibro");
+        jMenuItem5.addActionListener(this::jMenuItem5ActionPerformed);
+        jMenu2.add(jMenuItem5);
+
+        jMenuItem4.setText("Listar Audiolibro");
+        jMenuItem4.addActionListener(this::jMenuItem4ActionPerformed);
+        jMenu2.add(jMenuItem4);
+
         jMenuBar1.add(jMenu2);
+        jMenuBar1.add(jMenu4);
+
+        jMenu5.setText("Ayuda");
+
+        jMenuItem6.setText("Acerca de...");
+        jMenuItem6.addActionListener(this::jMenuItem6ActionPerformed);
+        jMenu5.add(jMenuItem6);
+
+        jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
 
@@ -80,7 +103,7 @@ public class GUIPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 170, Short.MAX_VALUE)
+            .addGap(0, 171, Short.MAX_VALUE)
         );
 
         pack();
@@ -100,6 +123,20 @@ public class GUIPrincipal extends javax.swing.JFrame {
         gui.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        GUIAddLibroAudio gui = new GUIAddLibroAudio();
+        gui.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        GUIListarLibroAudio gui = new GUIListarLibroAudio();
+        gui.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        JOptionPane.showMessageDialog(this, "Desarrollado por CAL");
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     
   
 
@@ -107,10 +144,15 @@ public class GUIPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     // End of variables declaration//GEN-END:variables
 }
 

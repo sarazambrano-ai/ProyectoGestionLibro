@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.sxzo.gestionlibros.gui;
-
 import com.sxzo.gestionlibros.model.Libro;
 import com.sxzo.gestionlibros.model.LibroAudio;
 import com.sxzo.gestionlibros.model.LibroFisico;
@@ -13,18 +12,19 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+
 /**
  *
- * @author UNIBAGUE
+ * @author Alejandra
  */
-public class GUIListarLibro extends javax.swing.JFrame {
-
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIListarLibro.class.getName());
+public class GUIListarLibroAudio extends javax.swing.JFrame {
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIListarLibroAudio.class.getName());
 
     /**
-     * Creates new form GUIListarDocente
+     * Creates new form GUIListarLibroAudio
      */
-    public GUIListarLibro() {
+    public GUIListarLibroAudio() {
         initComponents();
         setLocationRelativeTo(this);
     }
@@ -39,13 +39,13 @@ public class GUIListarLibro extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblLibro = new javax.swing.JTable();
+        tblAudioLibro = new javax.swing.JTable();
         btnListar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Listar Libro");
+        setTitle("Listar Audiolibro");
 
-        tblLibro.setModel(new javax.swing.table.DefaultTableModel(
+        tblAudioLibro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -53,18 +53,18 @@ public class GUIListarLibro extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Isbn", "Titulo", "Autor", "Precio", "Fecha impresion", "Tipo tapa"
+                "Isbn", "Titulo", "Autor", "Precio", "Duración Minutos", "Narrador"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblLibro);
+        jScrollPane1.setViewportView(tblAudioLibro);
 
         btnListar.setText("Listar");
         btnListar.addActionListener(this::btnListarActionPerformed);
@@ -73,55 +73,51 @@ public class GUIListarLibro extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnListar)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnListar)
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnListar)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addComponent(btnListar))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
-        
         Map<String, Libro> libros;
         libros = ServicioLibro.getLibro();
-
-        DefaultTableModel modelo = (DefaultTableModel) tblLibro.getModel();
+        
+        DefaultTableModel modelo = (DefaultTableModel) tblAudioLibro.getModel();
         modelo.setRowCount(0);
+        for (Map.Entry<String, Libro> emp : libros.entrySet()) {
+            String isbn = emp.getKey();
+            LibroAudio AudioLibro = (LibroAudio) emp.getValue();
 
-        for (Map.Entry<String, Libro> lib : libros.entrySet()) {
+            Object[] fila = new Object[]{
+                isbn,
+                AudioLibro.getTitulo(), 
+                AudioLibro.getAutor(),
+                AudioLibro.getPrecio(),
+                AudioLibro.getDuracionMinutos(),
+                AudioLibro.getNarrador()
+            };
 
-        String isbn = lib.getKey();
-        LibroFisico libro = (LibroFisico) lib.getValue();
-
-        Object[] fila = new Object[]{
-        isbn,
-        libro.getTitulo(),
-        libro.getAutor(),
-        libro.getPrecio(),
-        libro.getFechaImpresion(),
-        libro.getTipoTapa()
-    };
-
-    modelo.addRow(fila);
-} 
+            modelo.addRow(fila);
+        }
 
     }//GEN-LAST:event_btnListarActionPerformed
-
+       
     /**
      * @param args the command line arguments
      */
@@ -144,12 +140,12 @@ public class GUIListarLibro extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GUIListarLibro().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new GUIListarLibroAudio().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnListar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblLibro;
+    private javax.swing.JTable tblAudioLibro;
     // End of variables declaration//GEN-END:variables
 }
