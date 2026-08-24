@@ -4,23 +4,20 @@
  */
 package com.sxzo.gestionlibros.gui;
 
-import com.sxzo.gestionlibros.model.Libro;
-import com.sxzo.gestionlibros.model.LibroAudio;
+import com.sxzo.gestionlibros.controller.LibroController;
 import com.sxzo.gestionlibros.model.LibroFisico;
-import com.sxzo.gestionlibros.ServicioLibro;
-import java.time.LocalDate;
-import java.util.Map;
-import javax.swing.JOptionPane;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author UNIBAGUE
+ * @author misa
  */
 public class GUIListarLibro extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIListarLibro.class.getName());
-
+    private final LibroController libroController = new LibroController();
+    
     /**
      * Creates new form GUIListarDocente
      */
@@ -42,6 +39,7 @@ public class GUIListarLibro extends javax.swing.JFrame {
         tblLibro = new javax.swing.JTable();
         btnListar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButtonCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listar Libro");
@@ -73,6 +71,9 @@ public class GUIListarLibro extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Listado de Libros Físicos");
 
+        jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.addActionListener(this::jButtonCancelarActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -84,10 +85,12 @@ public class GUIListarLibro extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
                         .addGap(24, 24, 24))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(130, 130, 130)
+                .addComponent(jButtonCancelar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnListar)
                 .addGap(103, 103, 103))
         );
@@ -99,8 +102,10 @@ public class GUIListarLibro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnListar)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnListar)
+                    .addComponent(jButtonCancelar))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -108,30 +113,30 @@ public class GUIListarLibro extends javax.swing.JFrame {
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
         
-        Map<String, Libro> libros;
-        libros = ServicioLibro.getLibro();
+        List<LibroFisico> libros = libroController.listarLibrosFisicos();
 
         DefaultTableModel modelo = (DefaultTableModel) tblLibro.getModel();
         modelo.setRowCount(0);
 
-        for (Map.Entry<String, Libro> lib : libros.entrySet()) {
+        for (LibroFisico libro : libros) {
 
-        String isbn = lib.getKey();
-        LibroFisico libro = (LibroFisico) lib.getValue();
+            Object[] fila = new Object[]{
+                libro.getIsbn(),
+                libro.getTitulo(),
+                libro.getAutor(),
+                libro.getPrecio(),
+                libro.getFechaImpresion(),
+                libro.getTipoTapa()
+            };
 
-        Object[] fila = new Object[]{
-        isbn,
-        libro.getTitulo(),
-        libro.getAutor(),
-        libro.getPrecio(),
-        libro.getFechaImpresion(),
-        libro.getTipoTapa()
-    };
-
-    modelo.addRow(fila);
-} 
+            modelo.addRow(fila);
+        }
 
     }//GEN-LAST:event_btnListarActionPerformed
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -160,6 +165,7 @@ public class GUIListarLibro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnListar;
+    private javax.swing.JButton jButtonCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblLibro;

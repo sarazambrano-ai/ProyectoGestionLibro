@@ -3,11 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.sxzo.gestionlibros.gui;
-import com.sxzo.gestionlibros.model.Libro;
 import com.sxzo.gestionlibros.model.LibroAudio;
-import com.sxzo.gestionlibros.model.LibroFisico;
-import com.sxzo.gestionlibros.ServicioLibro;
-import java.time.LocalDate;
+import com.sxzo.gestionlibros.controller.LibroController;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,6 +14,7 @@ import javax.swing.JOptionPane;
 public class GUIAddLibroAudio extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIAddLibroAudio.class.getName());
+    private final LibroController libroController = new LibroController();
 
     /**
      * Creates new form GUIAddLibroAudio
@@ -48,7 +46,7 @@ public class GUIAddLibroAudio extends javax.swing.JFrame {
         txtDuracionMinutos = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtNarrador = new javax.swing.JTextField();
-        btnMensaje = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -81,8 +79,8 @@ public class GUIAddLibroAudio extends javax.swing.JFrame {
 
         txtNarrador.addActionListener(this::txtNarradorActionPerformed);
 
-        btnMensaje.setText("Mensaje");
-        btnMensaje.addActionListener(this::btnMensajeActionPerformed);
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Adicionar Audiolibro");
@@ -95,7 +93,7 @@ public class GUIAddLibroAudio extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnMensaje)
+                        .addComponent(btnCancelar)
                         .addGap(85, 85, 85)
                         .addComponent(btnAceptar))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,7 +159,7 @@ public class GUIAddLibroAudio extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar)
-                    .addComponent(btnMensaje))
+                    .addComponent(btnCancelar))
                 .addGap(15, 15, 15))
         );
 
@@ -173,31 +171,17 @@ public class GUIAddLibroAudio extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIsbnActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String isbn;
-        String titulo;
-        String autor;
-        double precio;
-        int duracionMinutos;
-        String narrador;
-
-        Libro libAudio;
         try {
-            String strIsbn = txtIsbn.getText().trim();
-            String strAutor = txtAutor.getText().trim();
-            String strTitulo = txtTitulo.getText().trim();
-            String strPrecio = txtPrecio.getText().trim();
-            String strDuracionMinutos = txtDuracionMinutos.getText().trim();
-            String strNarrador = txtNarrador.getText().trim();
+            String isbn = txtIsbn.getText();
+            String titulo = txtTitulo.getText();
+            String autor = txtAutor.getText();
+            String precio = txtPrecio.getText();
+            String duracionMinutos = txtDuracionMinutos.getText();
+            String narrador = txtNarrador.getText();
 
-            isbn = strIsbn;
-            autor = strAutor;
-            titulo = strTitulo;
-            precio = Double.parseDouble(strPrecio);
-            duracionMinutos = Integer.parseInt(strDuracionMinutos);
-            narrador = strNarrador;
+            LibroAudio libAudio = libroController.agregarLibroAudio(isbn, titulo, autor,
+                    precio, duracionMinutos, narrador);
 
-            libAudio = new LibroAudio(isbn, titulo, autor, precio, duracionMinutos,narrador);
-            ServicioLibro.addLibro(libAudio);
             JOptionPane.showMessageDialog(this, "Audiolibro añadido!\nValor: $" + libAudio.totalPagar());
 
         } catch (Exception e) {
@@ -213,13 +197,9 @@ public class GUIAddLibroAudio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNarradorActionPerformed
 
-    private void btnMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMensajeActionPerformed
-        String mensaje;
-        mensaje = txtAutor.getText();
-        mensaje = "Hola " + mensaje.trim();
-
-        JOptionPane.showMessageDialog(this, mensaje);
-    }//GEN-LAST:event_btnMensajeActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -248,7 +228,7 @@ public class GUIAddLibroAudio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnMensaje;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
