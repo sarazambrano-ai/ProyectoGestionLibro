@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Alejandra
+ * @author misa
  */
 public class GUIAddLibroAudio extends javax.swing.JFrame {
     
@@ -22,6 +22,8 @@ public class GUIAddLibroAudio extends javax.swing.JFrame {
     public GUIAddLibroAudio() {
         initComponents();
         setLocationRelativeTo(this);
+        PlaceholderUtil.configurar(txtPrecio, "Ej: 25000");
+        PlaceholderUtil.configurar(txtDuracionMinutos, "Ej: 120");
     }
 
     /**
@@ -175,14 +177,28 @@ public class GUIAddLibroAudio extends javax.swing.JFrame {
             String isbn = txtIsbn.getText();
             String titulo = txtTitulo.getText();
             String autor = txtAutor.getText();
-            String precio = txtPrecio.getText();
-            String duracionMinutos = txtDuracionMinutos.getText();
+            String precio = PlaceholderUtil.obtenerTexto(txtPrecio, "Ej: 25000");
+            String duracionMinutos = PlaceholderUtil.obtenerTexto(txtDuracionMinutos, "Ej: 120");
             String narrador = txtNarrador.getText();
 
             LibroAudio libAudio = libroController.agregarLibroAudio(isbn, titulo, autor,
                     precio, duracionMinutos, narrador);
 
-            JOptionPane.showMessageDialog(this, "Audiolibro añadido!\nValor: $" + libAudio.totalPagar());
+                        JOptionPane.showMessageDialog(this, String.format(
+                "<html><body style='width: 220px; font-family: Segoe UI;'>"
+                + "<h3 style='color: #2e7d32;'> Audiolibro añadido</h3>"
+                + "<b>Título:</b> %s<br>"
+                + "<hr>"
+                + "Precio base: $%,.0f<br>"
+                + "Recargo (%d min x $100): $%,.0f<br>"
+                + "<b>Valor total: $%,.0f</b>"
+                + "</body></html>",
+                titulo,
+                Double.parseDouble(precio),
+                Integer.parseInt(duracionMinutos),
+                Integer.parseInt(duracionMinutos) * 100.0,
+                libAudio.totalPagar()
+            ));
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e);

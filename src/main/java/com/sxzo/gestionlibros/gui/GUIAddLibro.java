@@ -19,8 +19,11 @@ public class GUIAddLibro extends javax.swing.JFrame {
     public GUIAddLibro() {
         initComponents();
         setLocationRelativeTo(this);
+        PlaceholderUtil.configurar(txtFechaImpresion, "AAAA-MM-DD");
+        PlaceholderUtil.configurar(txtPrecio, "Ej: 25000");
+        PlaceholderUtil.configurar(txtAnioFundacion, "Ej: 1998");
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,7 +84,10 @@ public class GUIAddLibro extends javax.swing.JFrame {
         jLabel6.setText("Fecha impresion:");
         jLabel6.setToolTipText("");
 
+        txtFechaImpresion.setForeground(new java.awt.Color(153, 153, 153));
+        txtFechaImpresion.setText("AAAA-MM-DD");
         txtFechaImpresion.setToolTipText("2026-12-25");
+        txtFechaImpresion.addActionListener(this::txtFechaImpresionActionPerformed);
 
         jLabel7.setText("Editorial:");
 
@@ -128,7 +134,7 @@ public class GUIAddLibro extends javax.swing.JFrame {
                             .addComponent(txtAnioFundacion, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtEditorial, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtFechaImpresion, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(38, 38, 38))
+                        .addGap(98, 98, 98))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -155,10 +161,10 @@ public class GUIAddLibro extends javax.swing.JFrame {
                     .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtFechaImpresion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEditorial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
@@ -185,16 +191,30 @@ public class GUIAddLibro extends javax.swing.JFrame {
             String isbn = txtIsbn.getText();
             String titulo = txtTitulo.getText();
             String autor = txtAutor.getText();
-            String precio = txtPrecio.getText();
-            String fechaImpresion = txtFechaImpresion.getText();
+            String precio = PlaceholderUtil.obtenerTexto(txtPrecio, "Ej: 25000");
+            String fechaImpresion = PlaceholderUtil.obtenerTexto(txtFechaImpresion, "AAAA-MM-DD");
             String tipoTapa = (String) cmbTipoTapa.getSelectedItem();
             String editorial = txtEditorial.getText();
-            String anioFundacion = txtAnioFundacion.getText();
+            String anioFundacion = PlaceholderUtil.obtenerTexto(txtAnioFundacion, "Ej: 1998");
 
             LibroFisico lib = libroController.agregarLibroFisico(isbn, titulo, autor,
                     precio, fechaImpresion, tipoTapa, editorial, anioFundacion);
 
-            JOptionPane.showMessageDialog(this, "Libro añadido!\nValor: $" + lib.totalPagar());
+             JOptionPane.showMessageDialog(this, String.format(
+                "<html><body style='width: 220px; font-family: Segoe UI;'>"
+                + "<h3 style='color: #2e7d32;'> Libro añadido</h3>"
+                + "<b>Título:</b> %s<br>"
+                + "<hr>"
+                + "Precio base: $%,.0f<br>"
+                + "Recargo (tapa %s): $%,.0f<br>"
+                + "<b>Valor total: $%,.0f</b>"
+                + "</body></html>",
+                titulo,
+                Double.parseDouble(precio),
+                tipoTapa,
+                (lib.totalPagar() - Double.parseDouble(precio)),
+                lib.totalPagar()
+            ));
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e);
@@ -216,6 +236,10 @@ public class GUIAddLibro extends javax.swing.JFrame {
     private void txtAnioFundacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnioFundacionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAnioFundacionActionPerformed
+
+    private void txtFechaImpresionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaImpresionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFechaImpresionActionPerformed
 
     /**
      * @param args the command line arguments

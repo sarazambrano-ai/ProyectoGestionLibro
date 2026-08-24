@@ -3,13 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.sxzo.gestionlibros.gui;
-import com.sxzo.gestionlibros.model.Libro;
+
+import com.sxzo.gestionlibros.controller.LibroController;
 import com.sxzo.gestionlibros.model.LibroAudio;
-import com.sxzo.gestionlibros.model.LibroFisico;
-import com.sxzo.gestionlibros.ServicioLibro;
-import java.time.LocalDate;
-import java.util.Map;
-import javax.swing.JOptionPane;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -20,7 +17,8 @@ import javax.swing.table.DefaultTableModel;
 public class GUIListarLibroAudio extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIListarLibroAudio.class.getName());
-
+    private final LibroController libroController = new LibroController();
+    
     /**
      * Creates new form GUIListarLibroAudio
      */
@@ -42,6 +40,7 @@ public class GUIListarLibroAudio extends javax.swing.JFrame {
         tblAudioLibro = new javax.swing.JTable();
         btnListar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButtomCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listar Audiolibro");
@@ -73,6 +72,9 @@ public class GUIListarLibroAudio extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Listado de Audiolibros");
 
+        jButtomCancelar.setText("Cancelar");
+        jButtomCancelar.addActionListener(this::jButtomCancelarActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,6 +89,8 @@ public class GUIListarLibroAudio extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtomCancelar)
+                .addGap(35, 35, 35)
                 .addComponent(btnListar)
                 .addGap(246, 246, 246))
         );
@@ -98,7 +102,9 @@ public class GUIListarLibroAudio extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnListar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnListar)
+                    .addComponent(jButtomCancelar))
                 .addGap(16, 16, 16))
         );
 
@@ -106,28 +112,29 @@ public class GUIListarLibroAudio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
-        Map<String, Libro> libros;
-        libros = ServicioLibro.getLibro();
-        
+        List<LibroAudio> libros = libroController.listarLibrosAudio();
+
         DefaultTableModel modelo = (DefaultTableModel) tblAudioLibro.getModel();
         modelo.setRowCount(0);
-        for (Map.Entry<String, Libro> emp : libros.entrySet()) {
-            String isbn = emp.getKey();
-            LibroAudio AudioLibro = (LibroAudio) emp.getValue();
+
+        for (LibroAudio audioLibro : libros) {
 
             Object[] fila = new Object[]{
-                isbn,
-                AudioLibro.getTitulo(), 
-                AudioLibro.getAutor(),
-                AudioLibro.getPrecio(),
-                AudioLibro.getDuracionMinutos(),
-                AudioLibro.getNarrador()
+                audioLibro.getIsbn(),
+                audioLibro.getTitulo(),
+                audioLibro.getAutor(),
+                audioLibro.getPrecio(),
+                audioLibro.getDuracionMinutos(),
+                audioLibro.getNarrador()
             };
 
             modelo.addRow(fila);
         }
-
     }//GEN-LAST:event_btnListarActionPerformed
+
+    private void jButtomCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtomCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButtomCancelarActionPerformed
        
     /**
      * @param args the command line arguments
@@ -156,6 +163,7 @@ public class GUIListarLibroAudio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnListar;
+    private javax.swing.JButton jButtomCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblAudioLibro;
