@@ -1,12 +1,8 @@
 package com.sxzo.gestionlibros.gui;
 
 
-import com.sxzo.gestionlibros.model.Libro;
-import com.sxzo.gestionlibros.model.LibroAudio;
+import com.sxzo.gestionlibros.controller.LibroController;
 import com.sxzo.gestionlibros.model.LibroFisico;
-import com.sxzo.gestionlibros.ServicioLibro;
-import com.sxzo.gestionlibros.model.Editorial;
-import java.time.LocalDate;
 import javax.swing.JOptionPane;
 /**
  *
@@ -15,7 +11,8 @@ import javax.swing.JOptionPane;
 public class GUIAddLibro extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIAddLibro.class.getName());
-
+    private final LibroController libroController = new LibroController();
+    
     /**
      * Creates new form GUIAddDocente
      */
@@ -184,35 +181,19 @@ public class GUIAddLibro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String isbn;
-        String titulo;
-        String autor;
-        double precio;
-        LocalDate fechaImpresion;
-        String tipoTapa;
-        
-        Libro lib;
         try {
-            String strIsbn = txtIsbn.getText().trim();
-            String strAutor = txtAutor.getText().trim();
-            String strTitulo = txtTitulo.getText().trim();
-            String strPrecio = txtPrecio.getText().trim();
-            String strFechaImpresion = txtFechaImpresion.getText().trim();
-            String strTipoTapa = (String) cmbTipoTapa.getSelectedItem();
-            String strEditorial = txtEditorial.getText().trim();
-            String strAnioFundacion = txtAnioFundacion.getText().trim();
-            
-            isbn = strIsbn;
-            autor = strAutor;
-            titulo = strTitulo;
-            precio = Double.parseDouble(strPrecio);
-            fechaImpresion = LocalDate.parse(strFechaImpresion);
-            tipoTapa = strTipoTapa;
+            String isbn = txtIsbn.getText();
+            String titulo = txtTitulo.getText();
+            String autor = txtAutor.getText();
+            String precio = txtPrecio.getText();
+            String fechaImpresion = txtFechaImpresion.getText();
+            String tipoTapa = (String) cmbTipoTapa.getSelectedItem();
+            String editorial = txtEditorial.getText();
+            String anioFundacion = txtAnioFundacion.getText();
 
-            Editorial editorial = new Editorial(strEditorial, Integer.parseInt(strAnioFundacion));
+            LibroFisico lib = libroController.agregarLibroFisico(isbn, titulo, autor,
+                    precio, fechaImpresion, tipoTapa, editorial, anioFundacion);
 
-            lib = new LibroFisico(isbn, titulo, autor, precio, fechaImpresion, tipoTapa, editorial);
-            ServicioLibro.addLibro(lib);
             JOptionPane.showMessageDialog(this, "Libro añadido!\nValor: $" + lib.totalPagar());
 
         } catch (Exception e) {
