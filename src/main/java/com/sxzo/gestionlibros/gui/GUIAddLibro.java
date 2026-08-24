@@ -217,7 +217,7 @@ public class GUIAddLibro extends javax.swing.JFrame {
             ));
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e);
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 

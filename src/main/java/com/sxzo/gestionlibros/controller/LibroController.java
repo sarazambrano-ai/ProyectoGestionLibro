@@ -3,17 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.sxzo.gestionlibros.controller;
-
 import com.sxzo.gestionlibros.ServicioLibro;
 import com.sxzo.gestionlibros.model.Editorial;
 import com.sxzo.gestionlibros.model.Libro;
 import com.sxzo.gestionlibros.model.LibroAudio;
 import com.sxzo.gestionlibros.model.LibroFisico;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 /**
  * Controlador: intermedia entre las vistas (GUI) y el modelo/repositorio.
  * Aquí vive la validación, conversión de datos y las reglas de negocio,
@@ -28,9 +27,42 @@ public class LibroController {
             String strPrecio, String strFechaImpresion, String tipoTapa,
             String nombreEditorial, String strAnioFundacion) throws Exception {
 
-        double precio = Double.parseDouble(strPrecio.trim());
-        LocalDate fechaImpresion = LocalDate.parse(strFechaImpresion.trim());
-        Editorial editorial = new Editorial(nombreEditorial.trim(), Integer.parseInt(strAnioFundacion.trim()));
+        if (isbn == null || isbn.trim().isEmpty()) {
+            throw new Exception("El ISBN es obligatorio.");
+        }
+        if (titulo == null || titulo.trim().isEmpty()) {
+            throw new Exception("El título es obligatorio.");
+        }
+        if (autor == null || autor.trim().isEmpty()) {
+            throw new Exception("El autor es obligatorio.");
+        }
+
+        double precio;
+        try {
+            precio = Double.parseDouble(strPrecio.trim());
+        } catch (NumberFormatException e) {
+            throw new Exception("El precio debe ser un número válido, ejemplo: 25000");
+        }
+
+        LocalDate fechaImpresion;
+        try {
+            fechaImpresion = LocalDate.parse(strFechaImpresion.trim());
+        } catch (DateTimeParseException e) {
+            throw new Exception("La fecha debe tener el formato AAAA-MM-DD, ejemplo: 2020-05-20");
+        }
+
+        int anioFundacion;
+        try {
+            anioFundacion = Integer.parseInt(strAnioFundacion.trim());
+        } catch (NumberFormatException e) {
+            throw new Exception("El año de fundación debe ser un número entero, ejemplo: 1998");
+        }
+
+        if (nombreEditorial == null || nombreEditorial.trim().isEmpty()) {
+            throw new Exception("El nombre de la editorial es obligatorio.");
+        }
+
+        Editorial editorial = new Editorial(nombreEditorial.trim(), anioFundacion);
 
         LibroFisico lib = new LibroFisico(isbn.trim(), titulo.trim(), autor.trim(),
                 precio, fechaImpresion, tipoTapa, editorial);
@@ -42,8 +74,33 @@ public class LibroController {
     public LibroAudio agregarLibroAudio(String isbn, String titulo, String autor,
             String strPrecio, String strDuracionMinutos, String narrador) throws Exception {
 
-        double precio = Double.parseDouble(strPrecio.trim());
-        int duracionMinutos = Integer.parseInt(strDuracionMinutos.trim());
+        if (isbn == null || isbn.trim().isEmpty()) {
+            throw new Exception("El ISBN es obligatorio.");
+        }
+        if (titulo == null || titulo.trim().isEmpty()) {
+            throw new Exception("El título es obligatorio.");
+        }
+        if (autor == null || autor.trim().isEmpty()) {
+            throw new Exception("El autor es obligatorio.");
+        }
+
+        double precio;
+        try {
+            precio = Double.parseDouble(strPrecio.trim());
+        } catch (NumberFormatException e) {
+            throw new Exception("El precio debe ser un número válido, ejemplo: 25000");
+        }
+
+        int duracionMinutos;
+        try {
+            duracionMinutos = Integer.parseInt(strDuracionMinutos.trim());
+        } catch (NumberFormatException e) {
+            throw new Exception("La duración debe ser un número entero de minutos, ejemplo: 120");
+        }
+
+        if (narrador == null || narrador.trim().isEmpty()) {
+            throw new Exception("El narrador es obligatorio.");
+        }
 
         LibroAudio lib = new LibroAudio(isbn.trim(), titulo.trim(), autor.trim(),
                 precio, duracionMinutos, narrador.trim());
