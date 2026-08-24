@@ -4,18 +4,16 @@
  */
 package com.sxzo.gestionlibros.model;
 
-
-public class Editorial extends LibroFisico {
+/**
+ * Representa la editorial (casa editorial) asociada a un LibroFisico.
+ * Relación de asociación: un LibroFisico "tiene una" Editorial.
+ */
+public class Editorial {
 
     private String nombre;
     private int añoFundacion;
 
-    public Editorial(String isbn, String titulo, String autor, double precio,
-                     java.time.LocalDate fechaImpresion, String tipoTapa,
-                     String nombre, int añoFundacion) throws Exception {
-
-        super(isbn, titulo, autor, precio, fechaImpresion, tipoTapa);
-
+    public Editorial(String nombre, int añoFundacion) {
         this.nombre = nombre;
         this.añoFundacion = añoFundacion;
     }
@@ -34,7 +32,5 @@ public class Editorial extends LibroFisico {
 
     public void setAñoFundacion(int añoFundacion) {
         this.añoFundacion = añoFundacion;
-        
-
     }
 }
