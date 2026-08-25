@@ -165,4 +165,26 @@ public class LibroController {
 
         return (LibroAudio) lib;
     }
+    
+    
+    /**
+     * Elimina un libro físico validando previamente su existencia y tipo.
+     * 
+     * @param isbn ISBN del libro físico a eliminar
+     * @return El objeto LibroFisico eliminado
+     * @throws Exception Si el ISBN es inválido, no existe o es un audiolibro
+     */
+    public LibroFisico eliminarLibroFisico(String isbn) throws Exception {
+        // Reutiliza la búsqueda que valida ISBN vacío, no encontrado y tipo incorrecto
+        LibroFisico libro = buscarLibroFisico(isbn);
+        
+        boolean eliminado = ServicioLibro.eliminarLibro(isbn);
+        if (!eliminado) {
+            throw new Exception("No se pudo eliminar el libro físico con ISBN: " + isbn);
+        }
+        
+        return libro;
+    }
+    
+    
 }

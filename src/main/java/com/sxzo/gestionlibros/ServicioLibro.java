@@ -17,5 +17,21 @@ public class ServicioLibro {
     public static Libro buscarLibroPorIsbn(String isbn) {
         return libros.get(isbn);
     }
+    
+    
+    /**
+     * Elimina un libro del mapa por su ISBN.
+     * 
+     * @param isbn ISBN del libro a eliminar
+     * @return true si el libro existía y fue eliminado, false en caso contrario
+     */
+    public static boolean eliminarLibro(String isbn) {
+        if (isbn == null || isbn.trim().isEmpty()) {
+            return false;
+        }
+        return libros.remove(isbn.trim()) != null;
+    }
+    
+    
   
 }
