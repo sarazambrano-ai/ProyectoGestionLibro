@@ -42,6 +42,7 @@ public class GUIPrincipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItemBuscarLibro = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -69,6 +70,10 @@ public class GUIPrincipal extends javax.swing.JFrame {
         jMenuItem3.setText("Listar Libro");
         jMenuItem3.addActionListener(this::jMenuItem3ActionPerformed);
         jMenu3.add(jMenuItem3);
+
+        jMenuItemBuscarLibro.setText("Buscar Libro");
+        jMenuItemBuscarLibro.addActionListener(this::jMenuItemBuscarLibroActionPerformed);
+        jMenu3.add(jMenuItemBuscarLibro);
 
         jMenuBar1.add(jMenu3);
 
@@ -134,8 +139,27 @@ public class GUIPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        JOptionPane.showMessageDialog(this, "Desarrollado por CAL");
+        JOptionPane.showMessageDialog(this, String.format(
+            "<html><body style='width: 240px; font-family: Segoe UI;'>"
+            + "<h2 style='color: #2e7d32; margin-bottom: 2px;'>📚 Gestión de Libros</h2>"
+            + "<i>Versión %s</i>"
+            + "<hr>"
+            + "<b>Desarrollado por:</b><br>"
+            + "&bull; Misael Gallo<br>"
+            + "&bull; Sara Zambrano<br>"
+            + "&bull; Santiago Guimel<br>"
+            + "&bull; Alejandra G.<br>"
+            + "<hr>"
+            + "<i style='font-size: 10px; color: #666;'>Universidad de Ibagué — Desarrollo de Diseño de Soluciones</i>"
+            + "</body></html>",
+            "1.0"
+        ), "Acerca de...", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItemBuscarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemBuscarLibroActionPerformed
+        GUIBuscarLibro gui = new GUIBuscarLibro();
+        gui.setVisible(true);
+    }//GEN-LAST:event_jMenuItemBuscarLibroActionPerformed
 
     
   
@@ -153,6 +177,7 @@ public class GUIPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItemBuscarLibro;
     // End of variables declaration//GEN-END:variables
 }
 

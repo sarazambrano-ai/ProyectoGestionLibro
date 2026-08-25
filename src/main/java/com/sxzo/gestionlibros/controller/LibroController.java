@@ -13,6 +13,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 /**
  * Controlador: intermedia entre las vistas (GUI) y el modelo/repositorio.
  * Aquí vive la validación, conversión de datos y las reglas de negocio,
@@ -129,5 +130,39 @@ public class LibroController {
             }
         }
         return resultado;
+    }
+
+    public LibroFisico buscarLibroFisico(String isbn) throws Exception {
+        if (isbn == null || isbn.trim().isEmpty()) {
+            throw new Exception("Debes ingresar un ISBN para buscar.");
+        }
+
+        Libro lib = ServicioLibro.buscarLibroPorIsbn(isbn.trim());
+
+        if (lib == null) {
+            throw new Exception("No se encontró ningún libro físico con ese ISBN.");
+        }
+        if (!(lib instanceof LibroFisico)) {
+            throw new Exception("El ISBN existe, pero corresponde a un Audiolibro, no a un Libro Físico.");
+        }
+
+        return (LibroFisico) lib;
+    }
+
+    public LibroAudio buscarLibroAudio(String isbn) throws Exception {
+        if (isbn == null || isbn.trim().isEmpty()) {
+            throw new Exception("Debes ingresar un ISBN para buscar.");
+        }
+
+        Libro lib = ServicioLibro.buscarLibroPorIsbn(isbn.trim());
+
+        if (lib == null) {
+            throw new Exception("No se encontró ningún audiolibro con ese ISBN.");
+        }
+        if (!(lib instanceof LibroAudio)) {
+            throw new Exception("El ISBN existe, pero corresponde a un Libro Físico, no a un Audiolibro.");
+        }
+
+        return (LibroAudio) lib;
     }
 }
