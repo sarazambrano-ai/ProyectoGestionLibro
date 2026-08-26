@@ -24,12 +24,30 @@ import java.util.Map;
  */
 public class LibroController {
 
+    /**
+     * Valida los datos recibidos desde la Vista, construye un LibroFisico
+     * (con su Editorial asociada) y lo guarda en el repositorio.
+     *
+     * @param isbn identificador único del libro; no puede repetirse
+     * @param titulo título del libro
+     * @param autor autor del libro
+     * @param strPrecio precio base, como texto (ej. "25000")
+     * @param strFechaImpresion fecha de impresión, formato AAAA-MM-DD
+     * @param tipoTapa "Dura" o "Blanda", según lo seleccionado en el combo
+     * @param nombreEditorial nombre de la editorial asociada
+     * @param strAnioFundacion año de fundación de la editorial, como texto
+     * @return el LibroFisico creado y guardado
+     * @throws Exception si algún dato es inválido, falta, o el ISBN ya existe
+     */
     public LibroFisico agregarLibroFisico(String isbn, String titulo, String autor,
             String strPrecio, String strFechaImpresion, String tipoTapa,
             String nombreEditorial, String strAnioFundacion) throws Exception {
 
         if (isbn == null || isbn.trim().isEmpty()) {
             throw new Exception("El ISBN es obligatorio.");
+        }
+        if (ServicioLibro.buscarLibroPorIsbn(isbn.trim()) != null) {
+            throw new Exception("Ya existe un libro registrado con ese ISBN. Usa uno diferente.");
         }
         if (titulo == null || titulo.trim().isEmpty()) {
             throw new Exception("El título es obligatorio.");
@@ -72,11 +90,27 @@ public class LibroController {
         return lib;
     }
 
+    /**
+     * Valida los datos recibidos desde la Vista, construye un LibroAudio
+     * y lo guarda en el repositorio.
+     *
+     * @param isbn identificador único del audiolibro; no puede repetirse
+     * @param titulo título del audiolibro
+     * @param autor autor del audiolibro
+     * @param strPrecio precio base, como texto (ej. "25000")
+     * @param strDuracionMinutos duración en minutos, como texto (ej. "120")
+     * @param narrador nombre del narrador del audiolibro
+     * @return el LibroAudio creado y guardado
+     * @throws Exception si algún dato es inválido, falta, o el ISBN ya existe
+     */
     public LibroAudio agregarLibroAudio(String isbn, String titulo, String autor,
             String strPrecio, String strDuracionMinutos, String narrador) throws Exception {
 
         if (isbn == null || isbn.trim().isEmpty()) {
             throw new Exception("El ISBN es obligatorio.");
+        }
+        if (ServicioLibro.buscarLibroPorIsbn(isbn.trim()) != null) {
+            throw new Exception("Ya existe un libro registrado con ese ISBN. Usa uno diferente.");
         }
         if (titulo == null || titulo.trim().isEmpty()) {
             throw new Exception("El título es obligatorio.");
@@ -110,6 +144,9 @@ public class LibroController {
         return lib;
     }
 
+    /**
+     * @return todos los libros físicos actualmente guardados en el repositorio
+     */
     public List<LibroFisico> listarLibrosFisicos() {
         List<LibroFisico> resultado = new ArrayList<>();
         Map<String, Libro> libros = ServicioLibro.getLibro();
@@ -121,6 +158,9 @@ public class LibroController {
         return resultado;
     }
 
+    /**
+     * @return todos los audiolibros actualmente guardados en el repositorio
+     */
     public List<LibroAudio> listarLibrosAudio() {
         List<LibroAudio> resultado = new ArrayList<>();
         Map<String, Libro> libros = ServicioLibro.getLibro();
@@ -132,6 +172,14 @@ public class LibroController {
         return resultado;
     }
 
+    /**
+     * Busca un libro físico por su ISBN.
+     *
+     * @param isbn ISBN a buscar
+     * @return el LibroFisico encontrado
+     * @throws Exception si el ISBN está vacío, no existe, o corresponde
+     *                    a un LibroAudio en vez de un LibroFisico
+     */
     public LibroFisico buscarLibroFisico(String isbn) throws Exception {
         if (isbn == null || isbn.trim().isEmpty()) {
             throw new Exception("Debes ingresar un ISBN para buscar.");
@@ -149,6 +197,14 @@ public class LibroController {
         return (LibroFisico) lib;
     }
 
+    /**
+     * Busca un audiolibro por su ISBN.
+     *
+     * @param isbn ISBN a buscar
+     * @return el LibroAudio encontrado
+     * @throws Exception si el ISBN está vacío, no existe, o corresponde
+     *                    a un LibroFisico en vez de un LibroAudio
+     */
     public LibroAudio buscarLibroAudio(String isbn) throws Exception {
         if (isbn == null || isbn.trim().isEmpty()) {
             throw new Exception("Debes ingresar un ISBN para buscar.");

@@ -79,12 +79,21 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem4ActionPerformed"/>
               </Events>
             </MenuItem>
+<<<<<<< HEAD
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem9">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eliminar Audiolibro"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem9ActionPerformed"/>
+=======
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemBuscarAudioLibro">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Buscar Audiolibro"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemBuscarAudioLibroActionPerformed"/>
+>>>>>>> main
               </Events>
             </MenuItem>
           </SubComponents>

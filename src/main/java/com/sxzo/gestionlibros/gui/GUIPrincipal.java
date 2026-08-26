@@ -48,6 +48,7 @@ public class GUIPrincipal extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItemBuscarAudioLibro = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -96,6 +97,9 @@ public class GUIPrincipal extends javax.swing.JFrame {
         jMenuItem9.setText("Eliminar Audiolibro");
         jMenuItem9.addActionListener(this::jMenuItem9ActionPerformed);
         jMenu2.add(jMenuItem9);
+        jMenuItemBuscarAudioLibro.setText("Buscar Audiolibro");
+        jMenuItemBuscarAudioLibro.addActionListener(this::jMenuItemBuscarAudioLibroActionPerformed);
+        jMenu2.add(jMenuItemBuscarAudioLibro);
 
         jMenuBar1.add(jMenu2);
         jMenuBar1.add(jMenu4);
@@ -183,6 +187,10 @@ public class GUIPrincipal extends javax.swing.JFrame {
         gui.setVisible(true);
         
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+    private void jMenuItemBuscarAudioLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemBuscarAudioLibroActionPerformed
+        GUIBuscarLibroAudio gui = new GUIBuscarLibroAudio();
+        gui.setVisible(true);
+    }//GEN-LAST:event_jMenuItemBuscarAudioLibroActionPerformed
 
     
   
@@ -202,6 +210,7 @@ public class GUIPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenuItem jMenuItemBuscarAudioLibro;
     private javax.swing.JMenuItem jMenuItemBuscarLibro;
     // End of variables declaration//GEN-END:variables
 }
