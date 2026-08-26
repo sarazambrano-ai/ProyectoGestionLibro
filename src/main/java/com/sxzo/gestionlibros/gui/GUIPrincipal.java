@@ -153,7 +153,7 @@ public class GUIPrincipal extends javax.swing.JFrame {
             + "&bull; Misael Gallo<br>"
             + "&bull; Sara Zambrano<br>"
             + "&bull; Santiago Guimel<br>"
-            + "&bull; Alejandra G.<br>"
+            + "&bull; Alejandra Gonzalez<br>"
             + "<hr>"
             + "<i style='font-size: 10px; color: #666;'>Universidad de Ibagué — Desarrollo de Diseño de Soluciones</i>"
             + "</body></html>",
