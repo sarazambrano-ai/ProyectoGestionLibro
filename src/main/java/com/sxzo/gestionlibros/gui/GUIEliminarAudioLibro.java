@@ -13,15 +13,15 @@ import javax.swing.JOptionPane;
  *
  * @author guimel78
  */
-public class GUIEliminarLibro extends javax.swing.JFrame {
+public class GUIEliminarAudioLibro extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIEliminarLibro.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIEliminarAudioLibro.class.getName());
     private final LibroController libroController = new LibroController();
     
     /**
      * Creates new form GUIEliminarLibro
      */
-    public GUIEliminarLibro() {
+    public GUIEliminarAudioLibro() {
         initComponents();
     }
 
@@ -42,7 +42,7 @@ public class GUIEliminarLibro extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        jLabel1.setText("Eliminar Líbro");
+        jLabel1.setText("Eliminar Audiolibro");
 
         jLabel2.setText("ISBN");
 
@@ -54,25 +54,25 @@ public class GUIEliminarLibro extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButton1)
                         .addGroup(layout.createSequentialGroup()
                             .addGap(72, 72, 72)
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtIsbnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(150, 150, 150)
-                            .addComponent(jLabel1))))
+                            .addComponent(txtIsbnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(134, 134, 134)
+                        .addComponent(jLabel1)))
                 .addContainerGap(102, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel1)
-                .addGap(28, 28, 28)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel2)
                     .addComponent(txtIsbnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -85,9 +85,9 @@ public class GUIEliminarLibro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+ 
         eliminarLibro();
-        
+               
     }//GEN-LAST:event_jButton1ActionPerformed
 
     
@@ -96,16 +96,18 @@ public class GUIEliminarLibro extends javax.swing.JFrame {
         String isbn = txtIsbnEliminar.getText();
         
         try {
-            Libro lib = libroController.eliminarLibroFisico(isbn);
+            Libro lib = libroController.eliminarAudioLibro(isbn);
             txtIsbnEliminar.setText("");
             
-            JOptionPane.showMessageDialog(this, "El libro se elimino correctamente");
+            
+            JOptionPane.showMessageDialog(this, "El Audiolibro se elimino correctamente");
             
             
             
         } catch (Exception ex) 
         {
-            JOptionPane.showMessageDialog(this, "No se pudo eliminar el libro, verifica el codigo ISB");
+            JOptionPane.showMessageDialog(this, "No se pudo eliminar el Audiolibro, verifica el codigo ISB");
+            System.getLogger(GUIEliminarAudioLibro.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
         
         
@@ -143,7 +145,7 @@ public class GUIEliminarLibro extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GUIEliminarLibro().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new GUIEliminarAudioLibro().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
