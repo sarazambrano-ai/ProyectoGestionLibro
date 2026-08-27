@@ -4,6 +4,9 @@
  */
 package com.sxzo.gestionlibros.gui;
 
+import com.sxzo.gestionlibros.ServicioLibro;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author carinaortiz
@@ -17,6 +20,7 @@ public class GUITotalPagarLibroAudio extends javax.swing.JFrame {
      */
     public GUITotalPagarLibroAudio() {
         initComponents();
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -28,21 +32,78 @@ public class GUITotalPagarLibroAudio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        txtIsbn = new javax.swing.JTextField();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel1.setText("Total a pagar libro fisico");
+
+        jLabel2.setText("ISBN");
+
+        jButton1.setText("Calcular");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        txtIsbn.addActionListener(this::txtIsbnActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(49, 49, 49)
+                        .addComponent(txtIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1))
+                .addGap(33, 33, 33)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jLabel1)
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel2)
+                    .addComponent(jButton1)
+                    .addComponent(txtIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        try {
+            String isbn = txtIsbn.getText().trim();
+
+            double total = ServicioLibro.totalPagar(isbn);
+
+            if (total == 0) {
+                JOptionPane.showMessageDialog(this, "Libro no encontrado.");
+            } else {
+                JOptionPane.showMessageDialog(this,
+                    "El total a pagar es: $" + String.format("%,.0f", total));
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtIsbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIsbnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIsbnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +131,9 @@ public class GUITotalPagarLibroAudio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JTextField txtIsbn;
     // End of variables declaration//GEN-END:variables
 }
