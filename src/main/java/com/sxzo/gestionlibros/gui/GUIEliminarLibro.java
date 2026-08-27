@@ -50,7 +50,7 @@ public class GUIEliminarLibro extends javax.swing.JFrame {
         txtDuracionResultado = new javax.swing.JTextField();
         txtNarradorResultado = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtValorTotalResultado = new javax.swing.JTextField();
+        txtEditorial = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -82,7 +82,8 @@ public class GUIEliminarLibro extends javax.swing.JFrame {
 
         jLabel3.setText("Título:");
 
-        txtValorTotalResultado.setEditable(false);
+        txtEditorial.setEditable(false);
+        txtEditorial.addActionListener(this::txtEditorialActionPerformed);
 
         jLabel4.setText("Autor:");
 
@@ -122,7 +123,7 @@ public class GUIEliminarLibro extends javax.swing.JFrame {
                                     .addComponent(txtPrecioResultado)
                                     .addComponent(txtDuracionResultado)
                                     .addComponent(txtNarradorResultado)
-                                    .addComponent(txtValorTotalResultado)))
+                                    .addComponent(txtEditorial)))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(66, 66, 66)
                                 .addComponent(jLabel2)
@@ -169,7 +170,7 @@ public class GUIEliminarLibro extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(txtValorTotalResultado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEditorial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(52, 52, 52))
         );
 
@@ -185,6 +186,10 @@ public class GUIEliminarLibro extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         buscarLibro();
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEditorialActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEditorialActionPerformed
 
     
     private void eliminarLibro()
@@ -216,7 +221,7 @@ public class GUIEliminarLibro extends javax.swing.JFrame {
         txtPrecioResultado.setText(String.format("$%,.0f", lib.getPrecio()));
         txtDuracionResultado.setText(lib.getFechaImpresion().toString());
         txtNarradorResultado.setText(lib.getTipoTapa());
-        txtValorTotalResultado.setText(String.format("$%,.0f", lib.totalPagar()));
+        txtEditorial.setText(lib.getEditorial().getNombre());
 
     } catch (Exception e) {
      
@@ -267,10 +272,10 @@ public class GUIEliminarLibro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField txtAutorResultado;
     private javax.swing.JTextField txtDuracionResultado;
+    private javax.swing.JTextField txtEditorial;
     private javax.swing.JTextField txtIsbnEliminar;
     private javax.swing.JTextField txtNarradorResultado;
     private javax.swing.JTextField txtPrecioResultado;
     private javax.swing.JTextField txtTituloResultado;
-    private javax.swing.JTextField txtValorTotalResultado;
     // End of variables declaration//GEN-END:variables
 }

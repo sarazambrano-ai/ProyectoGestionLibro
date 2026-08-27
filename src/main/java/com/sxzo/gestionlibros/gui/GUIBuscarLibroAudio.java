@@ -142,6 +142,7 @@ public class GUIBuscarLibroAudio extends javax.swing.JFrame {
                         .addComponent(txtIsbnBuscar)
                         .addGap(123, 123, 123))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
