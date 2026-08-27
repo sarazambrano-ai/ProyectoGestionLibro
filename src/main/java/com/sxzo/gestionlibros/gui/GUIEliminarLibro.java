@@ -27,6 +27,7 @@ public class GUIEliminarLibro extends javax.swing.JFrame {
      */
     public GUIEliminarLibro() {
         initComponents();
+        setLocationRelativeTo(this);
     }
 
     /**
