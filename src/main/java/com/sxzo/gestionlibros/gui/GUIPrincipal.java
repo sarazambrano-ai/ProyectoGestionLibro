@@ -44,11 +44,13 @@ public class GUIPrincipal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItemBuscarLibro = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItemBuscarAudioLibro = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -82,6 +84,10 @@ public class GUIPrincipal extends javax.swing.JFrame {
         jMenuItem7.addActionListener(this::jMenuItem7ActionPerformed);
         jMenu3.add(jMenuItem7);
 
+        jMenuItem8.setText("Total a pagar");
+        jMenuItem8.addActionListener(this::jMenuItem8ActionPerformed);
+        jMenu3.add(jMenuItem8);
+
         jMenuBar1.add(jMenu3);
 
         jMenu2.setText("AudioLibro");
@@ -97,9 +103,14 @@ public class GUIPrincipal extends javax.swing.JFrame {
         jMenuItem9.setText("Eliminar Audiolibro");
         jMenuItem9.addActionListener(this::jMenuItem9ActionPerformed);
         jMenu2.add(jMenuItem9);
+
         jMenuItemBuscarAudioLibro.setText("Buscar Audiolibro");
         jMenuItemBuscarAudioLibro.addActionListener(this::jMenuItemBuscarAudioLibroActionPerformed);
         jMenu2.add(jMenuItemBuscarAudioLibro);
+
+        jMenuItem10.setText("Total a pagar");
+        jMenuItem10.addActionListener(this::jMenuItem10ActionPerformed);
+        jMenu2.add(jMenuItem10);
 
         jMenuBar1.add(jMenu2);
         jMenuBar1.add(jMenu4);
@@ -192,6 +203,20 @@ public class GUIPrincipal extends javax.swing.JFrame {
         gui.setVisible(true);
     }//GEN-LAST:event_jMenuItemBuscarAudioLibroActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+  
+        GUITotalPagarLibro gui = new GUITotalPagarLibro();
+        
+        gui.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        GUITotalPagarLibroAudio gui = new GUITotalPagarLibroAudio();
+        
+        gui.setVisible(true);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
     
   
 
@@ -203,12 +228,14 @@ public class GUIPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenuItem jMenuItemBuscarAudioLibro;
     private javax.swing.JMenuItem jMenuItemBuscarLibro;

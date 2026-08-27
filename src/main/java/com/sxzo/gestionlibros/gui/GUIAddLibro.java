@@ -1,18 +1,18 @@
 package com.sxzo.gestionlibros.gui;
 
-
 import com.sxzo.gestionlibros.controller.LibroController;
 import com.sxzo.gestionlibros.model.LibroFisico;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author UNIBAGUE
  */
 public class GUIAddLibro extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIAddLibro.class.getName());
     private final LibroController libroController = new LibroController();
-    
+
     /**
      * Creates new form GUIAddDocente
      */
@@ -23,7 +23,7 @@ public class GUIAddLibro extends javax.swing.JFrame {
         PlaceholderUtil.configurar(txtPrecio, "Ej: 25000");
         PlaceholderUtil.configurar(txtAnioFundacion, "Ej: 1998");
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -200,24 +200,11 @@ public class GUIAddLibro extends javax.swing.JFrame {
             LibroFisico lib = libroController.agregarLibroFisico(isbn, titulo, autor,
                     precio, fechaImpresion, tipoTapa, editorial, anioFundacion);
 
-             JOptionPane.showMessageDialog(this, String.format(
-                "<html><body style='width: 220px; font-family: Segoe UI;'>"
-                + "<h3 style='color: #2e7d32;'> Libro añadido</h3>"
-                + "<b>Título:</b> %s<br>"
-                + "<hr>"
-                + "Precio base: $%,.0f<br>"
-                + "Recargo (tapa %s): $%,.0f<br>"
-                + "<b>Valor total: $%,.0f</b>"
-                + "</body></html>",
-                titulo,
-                Double.parseDouble(precio),
-                tipoTapa,
-                (lib.totalPagar() - Double.parseDouble(precio)),
-                lib.totalPagar()
-            ));
+            JOptionPane.showMessageDialog(this, "Libro añadido");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
