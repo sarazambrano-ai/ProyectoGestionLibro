@@ -92,6 +92,11 @@ public class GUIBuscarLibroAudio extends javax.swing.JFrame {
         jLabel8.setText("Valor total:");
 
         txtTituloResultado.setEditable(false);
+        txtTituloResultado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTituloResultadoActionPerformed(evt);
+            }
+        });
 
         txtAutorResultado.setEditable(false);
 
@@ -193,6 +198,10 @@ public class GUIBuscarLibroAudio extends javax.swing.JFrame {
     private void txtIsbnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIsbnBuscarActionPerformed
         buscarLibro();
     }//GEN-LAST:event_txtIsbnBuscarActionPerformed
+
+    private void txtTituloResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTituloResultadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTituloResultadoActionPerformed
 
     private void buscarLibro() {
         try {

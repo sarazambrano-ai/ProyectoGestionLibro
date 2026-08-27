@@ -184,21 +184,7 @@ public class GUIAddLibroAudio extends javax.swing.JFrame {
             LibroAudio libAudio = libroController.agregarLibroAudio(isbn, titulo, autor,
                     precio, duracionMinutos, narrador);
 
-                        JOptionPane.showMessageDialog(this, String.format(
-                "<html><body style='width: 220px; font-family: Segoe UI;'>"
-                + "<h3 style='color: #2e7d32;'> Audiolibro añadido</h3>"
-                + "<b>Título:</b> %s<br>"
-                + "<hr>"
-                + "Precio base: $%,.0f<br>"
-                + "Recargo (%d min x $100): $%,.0f<br>"
-                + "<b>Valor total: $%,.0f</b>"
-                + "</body></html>",
-                titulo,
-                Double.parseDouble(precio),
-                Integer.parseInt(duracionMinutos),
-                Integer.parseInt(duracionMinutos) * 100.0,
-                libAudio.totalPagar()
-            ));
+            JOptionPane.showMessageDialog(this, "Libro añadido");            
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
