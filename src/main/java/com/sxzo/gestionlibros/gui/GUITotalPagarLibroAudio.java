@@ -5,6 +5,7 @@
 package com.sxzo.gestionlibros.gui;
 
 import com.sxzo.gestionlibros.ServicioLibro;
+import com.sxzo.gestionlibros.model.LibroAudio;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,7 +15,8 @@ import javax.swing.JOptionPane;
 public class GUITotalPagarLibroAudio extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUITotalPagarLibroAudio.class.getName());
-
+    private final ServicioLibro servicioLibro = ServicioLibro.getInstance();
+    
     /**
      * Creates new form GUITotalPagarLibroAudio
      */
@@ -40,7 +42,7 @@ public class GUITotalPagarLibroAudio extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        jLabel1.setText("Total a pagar libro fisico");
+        jLabel1.setText("Total a pagar audiolibro");
 
         jLabel2.setText("ISBN");
 
@@ -82,23 +84,16 @@ public class GUITotalPagarLibroAudio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
         try {
-            String isbn = txtIsbn.getText().trim();
+            String isbn = txtIsbn.getText();
+            LibroAudio lib = servicioLibro.buscarLibroAudio(isbn);
 
-            double total = ServicioLibro.totalPagar(isbn);
-
-            if (total == 0) {
-                JOptionPane.showMessageDialog(this, "Libro no encontrado.");
-            } else {
-                JOptionPane.showMessageDialog(this,
-                    "El total a pagar es: $" + String.format("%,.0f", total));
-            }
+            JOptionPane.showMessageDialog(this,
+                    "El total a pagar es: $" + String.format("%,.0f", lib.totalPagar()));
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtIsbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIsbnActionPerformed

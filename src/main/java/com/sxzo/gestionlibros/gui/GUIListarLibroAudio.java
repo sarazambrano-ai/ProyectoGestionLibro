@@ -4,7 +4,7 @@
  */
 package com.sxzo.gestionlibros.gui;
 
-import com.sxzo.gestionlibros.controller.LibroController;
+import com.sxzo.gestionlibros.ServicioLibro;
 import com.sxzo.gestionlibros.model.LibroAudio;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 public class GUIListarLibroAudio extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIListarLibroAudio.class.getName());
-    private final LibroController libroController = new LibroController();
+    private final ServicioLibro servicioLibro = ServicioLibro.getInstance();
     
     /**
      * Creates new form GUIListarLibroAudio
@@ -119,7 +119,7 @@ public class GUIListarLibroAudio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
-        List<LibroAudio> libros = libroController.listarLibrosAudio();
+        List<LibroAudio> libros = servicioLibro.listarLibrosAudio();
 
         DefaultTableModel modelo = (DefaultTableModel) tblAudioLibro.getModel();
         modelo.setRowCount(0);

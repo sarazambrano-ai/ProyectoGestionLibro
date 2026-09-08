@@ -4,7 +4,7 @@
  */
 package com.sxzo.gestionlibros.gui;
 
-import com.sxzo.gestionlibros.controller.LibroController;
+import com.sxzo.gestionlibros.ServicioLibro;
 import com.sxzo.gestionlibros.model.Libro;
 import com.sxzo.gestionlibros.model.LibroAudio;
 import com.sxzo.gestionlibros.model.LibroFisico;
@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 public class GUIEliminarLibro extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIEliminarLibro.class.getName());
-    private final LibroController libroController = new LibroController();
+    private final ServicioLibro servicioLibro = ServicioLibro.getInstance();
     
     /**
      * Creates new form GUIEliminarLibro
@@ -197,7 +197,7 @@ public class GUIEliminarLibro extends javax.swing.JFrame {
         String isbn = txtIsbnEliminar.getText();
         
         try {
-            Libro lib = libroController.eliminarLibroFisico(isbn);
+            Libro lib = servicioLibro.eliminarLibroFisico(isbn);
             txtIsbnEliminar.setText("");
             
             JOptionPane.showMessageDialog(this, "El libro se elimino correctamente");
@@ -206,7 +206,7 @@ public class GUIEliminarLibro extends javax.swing.JFrame {
             
         } catch (Exception ex) 
         {
-            JOptionPane.showMessageDialog(this, "No se pudo eliminar el libro, verifica el codigo ISB");
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
         }
         
     }
@@ -214,7 +214,7 @@ public class GUIEliminarLibro extends javax.swing.JFrame {
     try {
         String isbn = txtIsbnEliminar.getText();
 
-        LibroFisico lib = libroController.buscarLibroFisico(isbn);
+        LibroFisico lib = servicioLibro.buscarLibroFisico(isbn);
 
         txtTituloResultado.setText(lib.getTitulo());
         txtAutorResultado.setText(lib.getAutor());

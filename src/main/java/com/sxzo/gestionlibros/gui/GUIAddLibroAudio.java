@@ -4,7 +4,7 @@
  */
 package com.sxzo.gestionlibros.gui;
 import com.sxzo.gestionlibros.model.LibroAudio;
-import com.sxzo.gestionlibros.controller.LibroController;
+import com.sxzo.gestionlibros.ServicioLibro;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public class GUIAddLibroAudio extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIAddLibroAudio.class.getName());
-    private final LibroController libroController = new LibroController();
+    private final ServicioLibro servicioLibro = ServicioLibro.getInstance();
 
     /**
      * Creates new form GUIAddLibroAudio
@@ -181,7 +181,7 @@ public class GUIAddLibroAudio extends javax.swing.JFrame {
             String duracionMinutos = PlaceholderUtil.obtenerTexto(txtDuracionMinutos, "Ej: 120");
             String narrador = txtNarrador.getText();
 
-            LibroAudio libAudio = libroController.agregarLibroAudio(isbn, titulo, autor,
+            LibroAudio libAudio = servicioLibro.agregarLibroAudio(isbn, titulo, autor,
                     precio, duracionMinutos, narrador);
 
             JOptionPane.showMessageDialog(this, "Libro añadido");            

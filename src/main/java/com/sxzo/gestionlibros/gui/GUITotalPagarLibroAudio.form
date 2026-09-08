@@ -61,7 +61,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="sansserif" size="14" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Total a pagar libro fisico"/>
+        <Property name="text" type="java.lang.String" value="Total a pagar audiolibro"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">

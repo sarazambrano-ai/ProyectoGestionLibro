@@ -4,7 +4,7 @@
  */
 package com.sxzo.gestionlibros.gui;
 
-import com.sxzo.gestionlibros.controller.LibroController;
+import com.sxzo.gestionlibros.ServicioLibro;
 import com.sxzo.gestionlibros.model.Libro;
 import com.sxzo.gestionlibros.model.LibroAudio;
 import javax.swing.JOptionPane;
@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 public class GUIEliminarAudioLibro extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIEliminarAudioLibro.class.getName());
-    private final LibroController libroController = new LibroController();
+    private final ServicioLibro servicioLibro = ServicioLibro.getInstance();
     
     /**
      * Creates new form GUIEliminarLibro
@@ -232,7 +232,7 @@ public class GUIEliminarAudioLibro extends javax.swing.JFrame {
      private void buscarLibro() {
         try {
             String isbn = txtIsbnBuscar.getText();
-            LibroAudio lib = libroController.buscarLibroAudio(isbn);
+            LibroAudio lib = servicioLibro.buscarLibroAudio(isbn);
 
             txtTituloResultado.setText(lib.getTitulo());
             txtAutorResultado.setText(lib.getAutor());
@@ -260,7 +260,7 @@ public class GUIEliminarAudioLibro extends javax.swing.JFrame {
         String isbn = txtIsbnBuscar.getText();
         
         try {
-            Libro lib = libroController.eliminarAudioLibro(isbn);
+            Libro lib = servicioLibro.eliminarLibroAudio(isbn);
             txtIsbnBuscar.setText("");
             
             
@@ -270,8 +270,7 @@ public class GUIEliminarAudioLibro extends javax.swing.JFrame {
             
         } catch (Exception ex) 
         {
-            JOptionPane.showMessageDialog(this, "No se pudo eliminar el Audiolibro, verifica el codigo ISB");
-            System.getLogger(GUIEliminarAudioLibro.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
         }
         
         

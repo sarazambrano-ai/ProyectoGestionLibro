@@ -4,7 +4,7 @@
  */
 package com.sxzo.gestionlibros.gui;
 
-import com.sxzo.gestionlibros.controller.LibroController;
+import com.sxzo.gestionlibros.ServicioLibro;
 import com.sxzo.gestionlibros.model.LibroAudio;
 import javax.swing.JOptionPane;
 
@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 public class GUIBuscarLibroAudio extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIBuscarLibroAudio.class.getName());
-    private final LibroController libroController = new LibroController();
+    private final ServicioLibro servicioLibro = ServicioLibro.getInstance();
     
     /**
      * Creates new form GUIBuscarLibroAudio
@@ -207,7 +207,7 @@ public class GUIBuscarLibroAudio extends javax.swing.JFrame {
     private void buscarLibro() {
         try {
             String isbn = txtIsbnBuscar.getText();
-            LibroAudio lib = libroController.buscarLibroAudio(isbn);
+            LibroAudio lib = servicioLibro.buscarLibroAudio(isbn);
 
             txtTituloResultado.setText(lib.getTitulo());
             txtAutorResultado.setText(lib.getAutor());
