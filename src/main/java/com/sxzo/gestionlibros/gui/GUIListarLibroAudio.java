@@ -4,6 +4,8 @@
  */
 package com.sxzo.gestionlibros.gui;
 
+import com.sxzo.gestionlibros.IObservador;
+import com.sxzo.gestionlibros.Notificador;
 import com.sxzo.gestionlibros.ServicioLibro;
 import com.sxzo.gestionlibros.model.LibroAudio;
 import java.util.List;
@@ -14,10 +16,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Alejandra
  */
-public class GUIListarLibroAudio extends javax.swing.JFrame {
+public class GUIListarLibroAudio extends javax.swing.JFrame implements IObservador{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIListarLibroAudio.class.getName());
     private final ServicioLibro servicioLibro = ServicioLibro.getInstance();
+    
+    private final Notificador notificador = ServicioLibro.getNotificador();
+
+    
     
     /**
      * Creates new form GUIListarLibroAudio
@@ -25,6 +31,7 @@ public class GUIListarLibroAudio extends javax.swing.JFrame {
     public GUIListarLibroAudio() {
         initComponents();
         setLocationRelativeTo(this);
+        notificador.agregarObservador("modificar_Audiolibro", this);
     }
 
     /**
@@ -119,6 +126,31 @@ public class GUIListarLibroAudio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+        actualizarAudioLibros();
+    }//GEN-LAST:event_btnListarActionPerformed
+
+    private void jButtomCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtomCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButtomCancelarActionPerformed
+       
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnListar;
+    private javax.swing.JButton jButtomCancelar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblAudioLibro;
+    // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actualizar() 
+    {
+        actualizarAudioLibros();
+        
+    }
+    
+    private void actualizarAudioLibros()
+    {
         List<LibroAudio> libros = servicioLibro.listarLibrosAudio();
 
         DefaultTableModel modelo = (DefaultTableModel) tblAudioLibro.getModel();
@@ -137,42 +169,5 @@ public class GUIListarLibroAudio extends javax.swing.JFrame {
 
             modelo.addRow(fila);
         }
-    }//GEN-LAST:event_btnListarActionPerformed
-
-    private void jButtomCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtomCancelarActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_jButtomCancelarActionPerformed
-       
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GUIListarLibroAudio().setVisible(true));
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnListar;
-    private javax.swing.JButton jButtomCancelar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblAudioLibro;
-    // End of variables declaration//GEN-END:variables
 }

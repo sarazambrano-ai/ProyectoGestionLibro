@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.sxzo.gestionlibros.Notificador;
 
 /**
  * Servicio (Singleton) que gestiona la información de los libros:
@@ -27,6 +28,8 @@ import java.util.Map;
 public class ServicioLibro implements IServicioLibro {
 
     private static ServicioLibro instancia;
+    
+    private static Notificador notificador;
 
     private final Map<String, Libro> libros = new HashMap<>();
 
@@ -34,7 +37,9 @@ public class ServicioLibro implements IServicioLibro {
      * Constructor privado: nadie fuera de esta clase puede hacer
      * "new ServicioLibro()", garantizando que solo exista una instancia.
      */
-    private ServicioLibro() {
+    private ServicioLibro() 
+    {
+        notificador = new Notificador( "modificar_libroFisico", "modificar_Audiolibro");
     }
 
     /**
@@ -47,6 +52,12 @@ public class ServicioLibro implements IServicioLibro {
         }
         return instancia;
     }
+    
+    public static Notificador getNotificador()
+    {
+        return notificador;
+    }
+    
 
     @Override
     public LibroFisico agregarLibroFisico(String isbn, String titulo, String autor,
@@ -97,6 +108,9 @@ public class ServicioLibro implements IServicioLibro {
                 precio, fechaImpresion, tipoTapa, editorial);
 
         libros.put(lib.getIsbn(), lib);
+        
+        notificador.notificarObservadores("modificar_libroFisico");
+        
         return lib;
     }
 
@@ -139,6 +153,9 @@ public class ServicioLibro implements IServicioLibro {
                 precio, duracionMinutos, narrador.trim());
 
         libros.put(lib.getIsbn(), lib);
+        
+        notificador.notificarObservadores("modificar_Audiolibro");
+        
         return lib;
     }
 
@@ -204,6 +221,10 @@ public class ServicioLibro implements IServicioLibro {
     public Libro eliminarLibroFisico(String isbn) throws Exception {
         LibroFisico libro = buscarLibroFisico(isbn);
         libros.remove(isbn.trim());
+        
+        notificador.notificarObservadores("modificar_libroFisico");
+
+        
         return libro;
     }
 
@@ -211,6 +232,10 @@ public class ServicioLibro implements IServicioLibro {
     public Libro eliminarLibroAudio(String isbn) throws Exception {
         LibroAudio libro = buscarLibroAudio(isbn);
         libros.remove(isbn.trim());
+        
+        notificador.notificarObservadores("modificar_Audiolibro");
+
+        
         return libro;
     }
 

@@ -1,5 +1,6 @@
 package com.sxzo.gestionlibros.gui;
 
+import com.sxzo.gestionlibros.Notificador;
 import com.sxzo.gestionlibros.ServicioLibro;
 import com.sxzo.gestionlibros.model.LibroFisico;
 import javax.swing.JOptionPane;
@@ -12,7 +13,7 @@ public class GUIAddLibro extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIAddLibro.class.getName());
     private final ServicioLibro servicioLibro = ServicioLibro.getInstance();
-
+    
     /**
      * Creates new form GUIAddDocente
      */
@@ -201,6 +202,7 @@ public class GUIAddLibro extends javax.swing.JFrame {
                     precio, fechaImpresion, tipoTapa, editorial, anioFundacion);
 
             JOptionPane.showMessageDialog(this, "Libro añadido");
+            
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());

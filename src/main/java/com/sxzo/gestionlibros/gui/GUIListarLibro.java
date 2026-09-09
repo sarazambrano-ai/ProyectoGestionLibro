@@ -4,6 +4,8 @@
  */
 package com.sxzo.gestionlibros.gui;
 
+import com.sxzo.gestionlibros.IObservador;
+import com.sxzo.gestionlibros.Notificador;
 import com.sxzo.gestionlibros.ServicioLibro;
 import com.sxzo.gestionlibros.model.LibroFisico;
 import java.util.List;
@@ -13,10 +15,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author misa
  */
-public class GUIListarLibro extends javax.swing.JFrame {
+public class GUIListarLibro extends javax.swing.JFrame implements IObservador{
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIListarLibro.class.getName());
     private final ServicioLibro servicioLibro = ServicioLibro.getInstance();
+   
+    
+    
+    private final Notificador notificador = ServicioLibro.getNotificador();
+    
     
     /**
      * Creates new form GUIListarDocente
@@ -24,6 +31,7 @@ public class GUIListarLibro extends javax.swing.JFrame {
     public GUIListarLibro() {
         initComponents();
         setLocationRelativeTo(this);
+        notificador.agregarObservador("modificar_libroFisico", this);
     }
 
     /**
@@ -120,24 +128,7 @@ public class GUIListarLibro extends javax.swing.JFrame {
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
         
-        List<LibroFisico> libros = servicioLibro.listarLibrosFisicos();
-
-        DefaultTableModel modelo = (DefaultTableModel) tblLibro.getModel();
-        modelo.setRowCount(0);
-
-        for (LibroFisico libro : libros) {
-
-            Object[] fila = new Object[]{
-                libro.getIsbn(),
-                libro.getTitulo(),
-                libro.getAutor(),
-                libro.getPrecio(),
-                libro.getFechaImpresion(),
-                libro.getTipoTapa()
-            };
-
-            modelo.addRow(fila);
-        }
+        actualizarLista();
 
     }//GEN-LAST:event_btnListarActionPerformed
 
@@ -177,4 +168,32 @@ public class GUIListarLibro extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblLibro;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actualizar() 
+    {
+        actualizarLista();
+    }
+    
+    private void actualizarLista()
+    {
+        List<LibroFisico> libros = servicioLibro.listarLibrosFisicos();
+
+        DefaultTableModel modelo = (DefaultTableModel) tblLibro.getModel();
+        modelo.setRowCount(0);
+
+        for (LibroFisico libro : libros) {
+
+            Object[] fila = new Object[]{
+                libro.getIsbn(),
+                libro.getTitulo(),
+                libro.getAutor(),
+                libro.getPrecio(),
+                libro.getFechaImpresion(),
+                libro.getTipoTapa()
+            };
+
+            modelo.addRow(fila);
+        }
+    }
 }
