@@ -9,8 +9,10 @@ public class LibroFisico extends Libro {
     private Editorial editorial;
 
     public LibroFisico(String isbn, String titulo, String autor, double precio,
-                       LocalDate fechaImpresion, String tipoTapa, Editorial editorial) throws Exception {
+            LocalDate fechaImpresion, String tipoTapa, Editorial editorial) throws Exception {
+
         super(isbn, titulo, autor, precio);
+
         this.fechaImpresion = fechaImpresion;
         this.tipoTapa = tipoTapa;
         this.editorial = editorial;
@@ -32,6 +34,7 @@ public class LibroFisico extends Libro {
         this.tipoTapa = tipoTapa;
     }
 
+    // REFERENCIA A EDITORIAL
     public Editorial getEditorial() {
         return editorial;
     }
@@ -42,6 +45,7 @@ public class LibroFisico extends Libro {
 
     @Override
     public double totalPagar() {
+
         if (tipoTapa.equalsIgnoreCase("Dura")) {
             return getPrecio() + 10000;
         } else {
