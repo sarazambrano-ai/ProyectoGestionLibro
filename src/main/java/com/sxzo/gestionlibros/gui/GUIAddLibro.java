@@ -227,6 +227,11 @@ public class GUIAddLibro extends javax.swing.JFrame {
 
             Editorial editorial = servicioLibro.buscarEditorialPorNombreExacto(nombreEditorial);
 
+            if (editorial == null) {
+                JOptionPane.showMessageDialog(this, "Esa editorial no existe. Créala primero desde 'Adicionar Editorial'.");
+                return;
+             }
+            
             String anioFundacion = PlaceholderUtil.obtenerTexto(txtAnioFundacion, "Ej: 1998");
 
             LibroFisico lib = servicioLibro.agregarLibroFisico(isbn, titulo, autor, precio,
