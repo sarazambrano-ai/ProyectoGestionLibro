@@ -22,6 +22,7 @@ public class GUIBuscarEditorial extends javax.swing.JFrame {
      */
     public GUIBuscarEditorial() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

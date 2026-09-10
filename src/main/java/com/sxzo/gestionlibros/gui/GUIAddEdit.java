@@ -22,6 +22,7 @@ public class GUIAddEdit extends javax.swing.JFrame {
      */
     public GUIAddEdit() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

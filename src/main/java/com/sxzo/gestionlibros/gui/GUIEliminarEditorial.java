@@ -23,6 +23,7 @@ public class GUIEliminarEditorial extends javax.swing.JFrame {
      */
     public GUIEliminarEditorial() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

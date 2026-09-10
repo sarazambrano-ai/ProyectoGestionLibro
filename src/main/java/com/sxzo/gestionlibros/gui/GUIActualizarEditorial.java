@@ -23,6 +23,7 @@ public class GUIActualizarEditorial extends javax.swing.JFrame {
      */
     public GUIActualizarEditorial() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

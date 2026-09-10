@@ -23,6 +23,7 @@ public class GUIListarEditorial extends javax.swing.JFrame {
      */
     public GUIListarEditorial() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
