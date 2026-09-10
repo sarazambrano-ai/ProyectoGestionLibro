@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.sxzo.gestionlibros.Notificador;
+import com.sxzo.gestionlibros.Notificador;
 
 /**
  * Servicio (Singleton) que gestiona la información de los libros:
@@ -25,13 +26,16 @@ import com.sxzo.gestionlibros.Notificador;
  *
  * @author misae
  */
-public class ServicioLibro implements IServicioLibro {
+public class ServicioLibro {
 
     private static ServicioLibro instancia;
     
     private static Notificador notificador;
 
     private final Map<String, Libro> libros = new HashMap<>();
+    
+    private ArrayList<Editorial> editoriales = new ArrayList<>();
+    
 
     /**
      * Constructor privado: nadie fuera de esta clase puede hacer
@@ -59,10 +63,10 @@ public class ServicioLibro implements IServicioLibro {
     }
     
 
-    @Override
+    
     public LibroFisico agregarLibroFisico(String isbn, String titulo, String autor,
-            String strPrecio, String strFechaImpresion, String tipoTapa,
-            String nombreEditorial, String strAnioFundacion) throws Exception {
+            String strPrecio, LocalDate fechaImpresion, String tipoTapa,
+            Editorial editorial, String strAnioFundacion) throws Exception {
 
         if (isbn == null || isbn.trim().isEmpty()) {
             throw new Exception("El ISBN es obligatorio.");
@@ -84,13 +88,6 @@ public class ServicioLibro implements IServicioLibro {
             throw new Exception("El precio debe ser un número válido, ejemplo: 25000");
         }
 
-        LocalDate fechaImpresion;
-        try {
-            fechaImpresion = LocalDate.parse(strFechaImpresion.trim());
-        } catch (DateTimeParseException e) {
-            throw new Exception("La fecha debe tener el formato AAAA-MM-DD, ejemplo: 2020-05-20");
-        }
-
         int anioFundacion;
         try {
             anioFundacion = Integer.parseInt(strAnioFundacion.trim());
@@ -98,11 +95,9 @@ public class ServicioLibro implements IServicioLibro {
             throw new Exception("El año de fundación debe ser un número entero, ejemplo: 1998");
         }
 
-        if (nombreEditorial == null || nombreEditorial.trim().isEmpty()) {
+        if (editorial.getNombre() == null || editorial.getNombre().trim().isEmpty()) {
             throw new Exception("El nombre de la editorial es obligatorio.");
         }
-
-        Editorial editorial = new Editorial(nombreEditorial.trim(), anioFundacion);
 
         LibroFisico lib = new LibroFisico(isbn.trim(), titulo.trim(), autor.trim(),
                 precio, fechaImpresion, tipoTapa, editorial);
@@ -114,7 +109,7 @@ public class ServicioLibro implements IServicioLibro {
         return lib;
     }
 
-    @Override
+   
     public LibroAudio agregarLibroAudio(String isbn, String titulo, String autor,
             String strPrecio, String strDuracionMinutos, String narrador) throws Exception {
 
@@ -159,7 +154,7 @@ public class ServicioLibro implements IServicioLibro {
         return lib;
     }
 
-    @Override
+    
     public List<LibroFisico> listarLibrosFisicos() {
         List<LibroFisico> resultado = new ArrayList<>();
         for (Libro lib : libros.values()) {
@@ -170,7 +165,7 @@ public class ServicioLibro implements IServicioLibro {
         return resultado;
     }
 
-    @Override
+    
     public List<LibroAudio> listarLibrosAudio() {
         List<LibroAudio> resultado = new ArrayList<>();
         for (Libro lib : libros.values()) {
@@ -181,7 +176,7 @@ public class ServicioLibro implements IServicioLibro {
         return resultado;
     }
 
-    @Override
+    
     public LibroFisico buscarLibroFisico(String isbn) throws Exception {
         if (isbn == null || isbn.trim().isEmpty()) {
             throw new Exception("Debes ingresar un ISBN para buscar.");
@@ -199,7 +194,7 @@ public class ServicioLibro implements IServicioLibro {
         return (LibroFisico) lib;
     }
 
-    @Override
+    
     public LibroAudio buscarLibroAudio(String isbn) throws Exception {
         if (isbn == null || isbn.trim().isEmpty()) {
             throw new Exception("Debes ingresar un ISBN para buscar.");
@@ -217,7 +212,7 @@ public class ServicioLibro implements IServicioLibro {
         return (LibroAudio) lib;
     }
 
-    @Override
+    
     public Libro eliminarLibroFisico(String isbn) throws Exception {
         LibroFisico libro = buscarLibroFisico(isbn);
         libros.remove(isbn.trim());
@@ -228,7 +223,7 @@ public class ServicioLibro implements IServicioLibro {
         return libro;
     }
 
-    @Override
+    
     public Libro eliminarLibroAudio(String isbn) throws Exception {
         LibroAudio libro = buscarLibroAudio(isbn);
         libros.remove(isbn.trim());
@@ -246,4 +241,123 @@ public class ServicioLibro implements IServicioLibro {
     private Libro buscarLibroPorIsbn(String isbn) {
         return libros.get(isbn);
     }
+    
+    
+    /**
+     * Crea y añade una nueva Editorial a la lista si no existe previa coincidencia.
+     */
+    public Editorial crearEditorial(String nombre, String strAnioFundacion) throws Exception {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new Exception("El nombre de la editorial es obligatorio.");
+        }
+
+        String nombreLimpio = nombre.trim();
+
+        if (buscarEditorialPorNombreExacto(nombreLimpio) != null) {
+            throw new Exception("Ya existe una editorial registrada con el nombre: " + nombreLimpio);
+        }
+
+        int anioFundacion;
+        try {
+            anioFundacion = Integer.parseInt(strAnioFundacion.trim());
+        } catch (NumberFormatException e) {
+            throw new Exception("El año de fundación debe ser un número entero válido, ejemplo: 1998");
+        }
+
+        Editorial editorial = new Editorial(nombreLimpio, anioFundacion);
+        editoriales.add(editorial);
+
+        return editorial;
+    }
+
+    /**
+     * Obtiene la lista completa de editoriales.
+     */
+    public List<Editorial> listarEditoriales() {
+        return new ArrayList<>(editoriales);
+    }
+
+    /**
+     * Busca una editorial de forma exacta por su nombre (ignorando mayúsculas/minúsculas).
+     */
+    public Editorial buscarEditorialPorNombreExacto(String nombre) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            return null;
+        }
+        for (Editorial ed : editoriales) {
+            if (ed.getNombre().equalsIgnoreCase(nombre.trim())) {
+                return ed;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Busca editoriales cuyo nombre contenga el texto dado.
+     * Ideal para autocompletar o desplegables con filtro dinámico al escribir.
+     */
+    public List<Editorial> buscarEditorialesPorCoincidencia(String textoBusqueda) {
+        List<Editorial> coincidencias = new ArrayList<>();
+        if (textoBusqueda == null || textoBusqueda.trim().isEmpty()) {
+            return listarEditoriales();
+        }
+
+        String filtro = textoBusqueda.trim().toLowerCase();
+        for (Editorial ed : editoriales) {
+            if (ed.getNombre().toLowerCase().contains(filtro)) {
+                coincidencias.add(ed);
+            }
+        }
+        return coincidencias;
+    }
+
+    /**
+     * Actualiza el nombre y/o año de fundación de una editorial existente.
+     */
+    public Editorial actualizarEditorial(String nombreActual, String nuevoNombre, String strNuevoAnio) throws Exception {
+        Editorial editorial = buscarEditorialPorNombreExacto(nombreActual);
+        if (editorial == null) {
+            throw new Exception("No se encontró ninguna editorial registrada con el nombre: " + nombreActual);
+        }
+
+        if (nuevoNombre == null || nuevoNombre.trim().isEmpty()) {
+            throw new Exception("El nuevo nombre de la editorial es obligatorio.");
+        }
+
+        String nuevoNombreLimpio = nuevoNombre.trim();
+
+        // Validar si el nuevo nombre entra en conflicto con otra editorial existente
+        if (!editorial.getNombre().equalsIgnoreCase(nuevoNombreLimpio) 
+                && buscarEditorialPorNombreExacto(nuevoNombreLimpio) != null) {
+            throw new Exception("Ya existe otra editorial registrada con el nombre: " + nuevoNombreLimpio);
+        }
+
+        int nuevoAnio;
+        try {
+            nuevoAnio = Integer.parseInt(strNuevoAnio.trim());
+        } catch (NumberFormatException e) {
+            throw new Exception("El año de fundación debe ser un número entero válido.");
+        }
+
+        editorial.setNombre(nuevoNombreLimpio);
+        editorial.setAñoFundacion(nuevoAnio);
+
+        return editorial;
+    }
+
+    /**
+     * Elimina una editorial de la lista por su nombre.
+     */
+    public Editorial eliminarEditorial(String nombre) throws Exception {
+        Editorial editorial = buscarEditorialPorNombreExacto(nombre);
+        if (editorial == null) {
+            throw new Exception("No se encontró la editorial que deseas eliminar.");
+        }
+
+        editoriales.remove(editorial);
+
+        return editorial;
+    }
+    
+    
 }

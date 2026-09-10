@@ -2,8 +2,18 @@ package com.sxzo.gestionlibros.gui;
 
 import com.sxzo.gestionlibros.Notificador;
 import com.sxzo.gestionlibros.ServicioLibro;
+import com.sxzo.gestionlibros.model.Editorial;
 import com.sxzo.gestionlibros.model.LibroFisico;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -13,16 +23,19 @@ public class GUIAddLibro extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIAddLibro.class.getName());
     private final ServicioLibro servicioLibro = ServicioLibro.getInstance();
-    
+
     /**
      * Creates new form GUIAddDocente
      */
     public GUIAddLibro() {
         initComponents();
         setLocationRelativeTo(this);
-        PlaceholderUtil.configurar(txtFechaImpresion, "AAAA-MM-DD");
         PlaceholderUtil.configurar(txtPrecio, "Ej: 25000");
         PlaceholderUtil.configurar(txtAnioFundacion, "Ej: 1998");
+
+        cargarEditorialesIniciales();
+        configurarBuscadorEditorial();
+
     }
 
     /**
@@ -46,13 +59,13 @@ public class GUIAddLibro extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtFechaImpresion = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtEditorial = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtAnioFundacion = new javax.swing.JTextField();
         cmbTipoTapa = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
+        editoriales = new javax.swing.JComboBox<>();
+        JFechaImpresion = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Adicionar Libro");
@@ -85,14 +98,7 @@ public class GUIAddLibro extends javax.swing.JFrame {
         jLabel6.setText("Fecha impresion:");
         jLabel6.setToolTipText("");
 
-        txtFechaImpresion.setForeground(new java.awt.Color(153, 153, 153));
-        txtFechaImpresion.setText("AAAA-MM-DD");
-        txtFechaImpresion.setToolTipText("2026-12-25");
-        txtFechaImpresion.addActionListener(this::txtFechaImpresionActionPerformed);
-
         jLabel7.setText("Editorial:");
-
-        txtEditorial.addActionListener(this::txtEditorialActionPerformed);
 
         jLabel8.setText("Año Fundación:");
 
@@ -102,6 +108,9 @@ public class GUIAddLibro extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("Ingrese los datos del nuevo libro físico");
+
+        editoriales.setEditable(true);
+        editoriales.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -123,7 +132,7 @@ public class GUIAddLibro extends javax.swing.JFrame {
                                 .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(18, 18, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
@@ -132,9 +141,9 @@ public class GUIAddLibro extends javax.swing.JFrame {
                                     .addComponent(txtIsbn, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
                                     .addComponent(cmbTipoTapa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addComponent(btnAceptar, javax.swing.GroupLayout.Alignment.TRAILING))
-                            .addComponent(txtAnioFundacion, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEditorial, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFechaImpresion, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtAnioFundacion, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                            .addComponent(editoriales, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(JFechaImpresion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(98, 98, 98))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel9)
@@ -162,13 +171,13 @@ public class GUIAddLibro extends javax.swing.JFrame {
                     .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtFechaImpresion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JFechaImpresion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtEditorial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(editoriales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -193,16 +202,39 @@ public class GUIAddLibro extends javax.swing.JFrame {
             String titulo = txtTitulo.getText();
             String autor = txtAutor.getText();
             String precio = PlaceholderUtil.obtenerTexto(txtPrecio, "Ej: 25000");
-            String fechaImpresion = PlaceholderUtil.obtenerTexto(txtFechaImpresion, "AAAA-MM-DD");
+
+            Date fecha = JFechaImpresion.getDate();
+
+            if (fecha == null) {
+                throw new Exception("Debes elegir la fecha de impresión en el calendario.");
+            }
+
+// Conversión directa de Date a LocalDate
+            LocalDate fechaImpresion = fecha.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+
             String tipoTapa = (String) cmbTipoTapa.getSelectedItem();
-            String editorial = txtEditorial.getText();
+
+            Object editorialSeleccionada = editoriales.getSelectedItem();
+
+            if (editorialSeleccionada == null || editorialSeleccionada.toString().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debes seleccionar o escribir el nombre de una editorial.");
+                return;
+            }
+
+            String nombreEditorial = editorialSeleccionada.toString().trim();
+
+            Editorial editorial = servicioLibro.buscarEditorialPorNombreExacto(nombreEditorial);
+
             String anioFundacion = PlaceholderUtil.obtenerTexto(txtAnioFundacion, "Ej: 1998");
 
-            LibroFisico lib = servicioLibro.agregarLibroFisico(isbn, titulo, autor,
-                    precio, fechaImpresion, tipoTapa, editorial, anioFundacion);
+            LibroFisico lib = servicioLibro.agregarLibroFisico(isbn, titulo, autor, precio,
+                    fechaImpresion, tipoTapa, editorial, anioFundacion);
 
             JOptionPane.showMessageDialog(this, "Libro añadido");
-            
+
+            JFechaImpresion.setDate(null);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
@@ -218,47 +250,69 @@ public class GUIAddLibro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIsbnActionPerformed
 
-    private void txtEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEditorialActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEditorialActionPerformed
-
     private void txtAnioFundacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnioFundacionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAnioFundacionActionPerformed
 
-    private void txtFechaImpresionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaImpresionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaImpresionActionPerformed
+    // 1. Método para cargar todas las editoriales al iniciar
+    private void cargarEditorialesIniciales() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        List<Editorial> lista = ServicioLibro.getInstance().listarEditoriales();
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+        for (Editorial ed : lista) {
+            model.addElement(ed.getNombre());
+        }
+
+        editoriales.setModel(model);
+        editoriales.setSelectedIndex(-1); // Deja el campo vacío al inicio
+    }
+
+// 2. Método para configurar el buscador en tiempo real
+    private void configurarBuscadorEditorial() {
+        // Hace editable el ComboBox
+        editoriales.setEditable(true);
+
+        // Obtiene el editor de texto interno del ComboBox
+        JTextField textEditor = (JTextField) editoriales.getEditor().getEditorComponent();
+
+        // Escucha cada tecla presionada por el usuario
+        textEditor.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                // Ignorar teclas de navegación (flechas, enter, etc.) para evitar bugs
+                if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    return;
+                }
+
+                String texto = textEditor.getText();
+
+                // Obtener coincidencias desde ServicioLibro
+                List<Editorial> coincidencias = ServicioLibro.getInstance().buscarEditorialesPorCoincidencia(texto);
+
+                // Actualizar las opciones del ComboBox
+                DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+                for (Editorial ed : coincidencias) {
+                    model.addElement(ed.getNombre());
+                }
+
+                editoriales.setModel(model);
+                textEditor.setText(texto); // Mantiene el texto que el usuario está escribiendo
+
+                if (editoriales.getItemCount() > 0) {
+                    editoriales.showPopup(); // Mantiene visible el desplegable
+                } else {
+                    editoriales.hidePopup();
                 }
             }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GUIAddLibro().setVisible(true));
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser JFechaImpresion;
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox<String> cmbTipoTapa;
+    private javax.swing.JComboBox<String> editoriales;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -270,8 +324,6 @@ public class GUIAddLibro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField txtAnioFundacion;
     private javax.swing.JTextField txtAutor;
-    private javax.swing.JTextField txtEditorial;
-    private javax.swing.JTextField txtFechaImpresion;
     private javax.swing.JTextField txtIsbn;
     private javax.swing.JTextField txtPrecio;
     private javax.swing.JTextField txtTitulo;
