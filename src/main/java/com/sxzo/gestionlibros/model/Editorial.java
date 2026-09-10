@@ -11,12 +11,12 @@ package com.sxzo.gestionlibros.model;
 public class Editorial {
 
     private String nombre;
-    private int anioFundacion;
+    private int fechaFundacion;
 
 
     public Editorial(String nombre, int añoFundacion) {
         this.nombre = nombre;
-        this.anioFundacion = añoFundacion;
+        this.fechaFundacion = añoFundacion;
     }
 
     public String getNombre() {
@@ -28,11 +28,11 @@ public class Editorial {
     }
 
     public int getAñoFundacion() {
-        return anioFundacion;
+        return fechaFundacion;
     }
 
     public void setAñoFundacion(int añoFundacion) {
-        this.anioFundacion = añoFundacion;
+        this.fechaFundacion = añoFundacion;
     }
   
     
